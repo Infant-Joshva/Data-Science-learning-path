@@ -1,0 +1,136 @@
+print("hello world")
+--
+def fname():
+    print("hello")
+
+fname()
+
+--
+
+fname()
+
+--
+
+Fruits=('mango','orange','gova','apple')
+
+--
+def fruint_with_o(*Fruits):
+    for i in Fruits:
+        if 'o' in i.lower():
+            print(i)
+---
+fruint_with_o('mango','orange','gova','apple')
+---
+veg=['qq','wew','covd']
+---
+fruint_with_o(veg)
+---
+def welcome(no):
+    print(f'welcome {no}')
+--
+welcome(int(1))
+---
+def Details(name='Guest',age=None,gender=None,address=None):
+  print("Details")
+  print(f'Name: {name}')
+  print(f'Age: {age}')
+  print(f'Gender: {gender}')
+  print(f'Address: {address}')
+---
+Details('Karthick',25,'Male')
+---
+Details('Karthick',25,'Male','Cbe',641027)
+---
+def details(**det):
+     print("Details")
+     print(det['name'])
+     print(det['age'])
+     print(det['gender'])
+     print(det['Address'])
+---
+details(name='Karthick',age=25,gender='Male',Address='Chennai')
+---
+file=open('maths.txt','r')
+for i in file.readlines():
+    print(i)
+---
+file2=open('samplefile.txt','w')
+file2.write('sample text')
+file2.close()
+---
+file2=open('samplefile.txt','w')
+file2.write('text replaced')
+file2.close()
+---
+file2=open('samplefile.txt','a')
+file2.write('\ntext added')
+file2.close()
+---
+file2=open('samplefile.txt','r')
+for i in file2.readlines():
+     print(i)
+file2.close()
+---
+file2=open('samplefile.txt','w')
+file2.write('file overwritten')
+file2.close()
+---
+file=open('maths.txt','r')
+for i in file.readlines():
+    print(i)
+    file.close()
+---
+maths_list
+---
+maths_list=[i.strip() for i in maths_list]
+---
+maths_list
+---
+maths_list=[i.split() for i in maths_list]
+---
+maths_list
+---
+#maths = {'a','operation',b}
+def calc(**mat):
+    if mat['operation']== '+':
+        return float(mat['a'])+float(mat['a'])
+    elif mat['operation']== '-':
+        return float(mat['a'])-float(mat['a'])
+    elif mat['operation']== 'sqr':
+        return int(mat['a']) ** 2
+---
+calc(a=10,operation='+',b=20)
+---
+with open('maths.txt','r') as maths_file:
+    for i in maths_file.readlines():
+        print(i)
+---
+def new_math(file_name):
+    maths_list=[]
+    with open(file_name,'r') as math_file:
+        for i in math_file.readlines():
+            maths_list.append(i)
+    maths_list=[i.strip() for i in maths_list]
+    maths_list=[i.split() for i in maths_list]
+
+    for i,val in enumerate(maths_list):
+
+        if len(val)==3:
+            res=calc(a=val[0],operation=val[1],b=val[2])
+            val.append('=' + str(res))
+        elif len(val)==2:
+            res=calc(a=val[0],operation=val[1])
+            val.append('=' + str(res))
+    
+    return maths_list
+---
+new_math('maths.txt')
+---
+Final_result=new_math('maths.txt')
+Final_result
+---
+with open('maths.txt','w') as math_file:
+    for i in Final_result:
+        s=' '.join(i)
+        math_file.write(str(s)+'\n')
+---
