@@ -74,3 +74,5 @@ if selected_query != "-- Select a query --":
     query = queries[selected_query]
     result_df = pd.read_sql(query, engine)
     st.dataframe(result_df)
+
+#test commit
