@@ -3,8 +3,7 @@ import pandas as pd
 import sqlalchemy
 from sqlalchemy import create_engine, inspect
 
-# Connect to your database
-#db_url="postgresql://infant:5kV8T4PGM0C3pHexclSBZU80ijwqBMxn@dpg-d0mmus3e5dus738lfkgg-a.singapore-postgres.render.com/traffic" #Database Connection, Host Name, Password, Database Name
+
 
 traffic_df=pd.read_csv("Data-Science-learning-path\Mini_Project_1(Secure_check)Git\cleaned_traffic_stop.csv")
 
@@ -61,11 +60,11 @@ queries = {
     # 7.What time of day sees the most traffic stops?
     "Time of Day with the Highest Number of Traffic Stops":
         """
-        SELECT EXTRACT(HOUR FROM stop_time::time) AS hour_of_day, COUNT(*) AS stop_count
+        SELECT EXTRACT(HOUR FROM stop_date_time::timestamp) AS hour_of_day_24Hr, stop_time_12Hr AS hour_min_in_12Hr_format, COUNT(*) AS stop_count
         FROM traffic_stop
-        GROUP BY hour_of_day
+        GROUP BY hour_of_day_24Hr,hour_min_in_12Hr_format
         ORDER BY stop_count DESC
-        LIMIT 10;
+        LIMIT 20;
         """,
     # 8.What is the average stop duration for different violations?
     "Average Stop Duration by Violation Type":
@@ -83,10 +82,10 @@ queries = {
     # 9.Are stops during the night more likely to lead to arrests?
     "Likelihood of Arrests During Night-Time Traffic Stops":
         """
-        SELECT EXTRACT(HOUR FROM stop_time) AS hour_of_day, COUNT(is_arrested) AS arrest_count
+        SELECT CAST(EXTRACT(HOUR FROM stop_date_time::timestamp) AS INT) AS hour_of_day, stop_time_12Hr AS hour_min_in_12Hr_format, COUNT(is_arrested) AS arrest_count
         FROM traffic_stop
         WHERE is_arrested = TRUE
-        GROUP BY hour_of_day
+        GROUP BY hour_of_day,hour_min_in_12Hr_format
         ORDER BY arrest_count DESC
         LIMIT 10;
         """,
@@ -127,7 +126,7 @@ queries = {
         FROM traffic_stop
         WHERE drugs_related_stop = TRUE
         GROUP BY country_name
-        ORDER BY drug_related_stop_count DESC LIMIT 1;
+        ORDER BY drug_related_stop_count DESC;
         """,
     # 14.What is the arrest rate by country and violation?
     "Arrest Rate by Country and Type of Violation":
@@ -153,11 +152,11 @@ queries = {
         WITH yearly_summary AS
         (SELECT 
         country_name,
-		EXTRACT(YEAR FROM stop_date) AS year,
+		EXTRACT(YEAR FROM stop_date_time::date) AS year,
 		COUNT(is_arrested) AS total_stops,
 		SUM(CASE WHEN is_arrested = TRUE THEN 1 ELSE 0 END) AS arrest_count
 		FROM traffic_stop
-		GROUP BY country_name, EXTRACT(YEAR FROM stop_date))
+		GROUP BY country_name, EXTRACT(YEAR FROM stop_date_time::date))
         SELECT country_name,year,total_stops,arrest_count,SUM(arrest_count) OVER (PARTITION BY country_name ORDER BY year) AS cumulative_arrest_count 
         FROM yearly_summary;
         """,
@@ -177,13 +176,15 @@ queries = {
     # #Cast method is used the slice the decimal value
     "Time Period Analysis of Stops: Number of Stops by Year, Month, and Hour":
         """
-        SELECT
-        CAST(EXTRACT(YEAR FROM stop_date) AS INT) AS stop_year,
-        CAST(EXTRACT(MONTH FROM stop_date) AS INT) AS stop_month,
-        CAST(EXTRACT(HOUR FROM stop_time) AS INT) AS stop_hour,
+        SELECT 
+        CAST(EXTRACT(YEAR FROM stop_date::date) AS INT) AS stop_year, 
+        CAST(EXTRACT(MONTH FROM stop_date::date) AS INT) AS stop_month, 
+        CAST(EXTRACT(HOUR FROM stop_date_time::timestamp) AS INT) AS stop_hour,
         COUNT(*) AS total_stops
-        FROM traffic_stop
-        GROUP BY stop_year, stop_month, stop_hour
+        FROM traffic_stop 
+        GROUP BY CAST(EXTRACT(YEAR FROM stop_date::date) AS INT), 
+        CAST(EXTRACT(MONTH FROM stop_date::date) AS INT), 
+        CAST(EXTRACT(HOUR FROM stop_date_time::timestamp) AS INT)
         ORDER BY stop_year, stop_month, stop_hour;
         """,
     #4.Violations with High Search and Arrest Rates (Window Function)
@@ -202,7 +203,7 @@ queries = {
     "Driver Demographics by Country: Age, Gender, and Race":
         """
         SELECT country_name,
-        ROUND(AVG(driver_age_raw), 1) AS avg_age,
+        ROUND(AVG(driver_age_raw)) AS avg_age,
         COUNT(*) AS total_stops,
         SUM(CASE WHEN driver_gender = 'M' THEN 1 ELSE 0 END) AS male_count,
         SUM(CASE WHEN driver_gender = 'F' THEN 1 ELSE 0 END) AS female_count,
@@ -241,7 +242,6 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.markdown("---")
-#st.header("SecureCheck: A Python-SQL Digital Ledger for Police Post Logs")
 
 
 st.markdown("""
@@ -251,19 +251,7 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-#st.title("Advanced Insights")
 
-# Dropdown to select query
-#selected_query = st.selectbox("Select a query to run:", list(queries.keys()))
-
-# Run and display the selected query
-#if selected_query:
-    #query = queries[selected_query]
-    #result_df = pd.read_sql(query, engine)
-    #st.dataframe(result_df)
-
-# Add a placeholder option
-#options = ["-- Select a query --"] + list(queries.keys())
 options = ["--📋Available Queries!--"] + list(queries)
 
 # Create dropdown with default index 0 (placeholder)
@@ -281,7 +269,7 @@ if selected_query !="--📋Available Queries!--":
 #--------------------------------------------------------------------------------------
 
 # Load the dataset
-#traffic_df = pd.read_csv('cleaned_traffic_stop 4.csv')
+
 
 # Title
 st.markdown("""
@@ -295,28 +283,27 @@ st.markdown("""
 # User Inputs
 age = st.number_input("Driver Age", min_value=16, max_value=100, step=1)
 gender = st.selectbox("Driver Gender", ["Male", "Female"])
-violation = st.text_input("Violation (e.g., Speeding)")
-stop_time = st.time_input("Stop Time")
+violation = st.selectbox("Violation",["Drunk Driving","Speeding","Seatbelt","Signal Violation","Others"])
+stop_time = st.text_input("Stop Time")
 search_conducted = st.radio("Was a search conducted?", ["Yes", "No"])
 stop_outcome = st.selectbox("Stop Outcome", ["Ticket", "Warning", "Arrest"])
 stop_duration = st.selectbox("Stop Duration", ["0-15", "16-30", "30+"])
 drug_related = st.radio("Was it drug-related?", ["Yes", "No"])
 
-# When button is clicked
 if st.button("Generate Summary"):
 
     # Convert inputs to match dataset format
     gender_short = 'M' if gender == 'Male' else 'F'
-    search_flag = 'TRUE' if search_conducted == 'Yes' else 'FALSE'
-    drug_flag = 'TRUE' if drug_related == 'Yes' else 'FALSE'
-    stop_time_str = stop_time.strftime('%H:%M')
+    #stop_time_str = stop_time.strftime('%H:%M')  # To match with stop_time in dataset
+    search_flag = True if search_conducted == 'Yes' else False
+    drug_flag = True if drug_related == 'Yes' else False
 
     # Filter the dataset
     filtered_df = traffic_df[
-        (traffic_df['driver_age_raw'] == str(age)) &
+        (traffic_df['driver_age_raw'] == age) &
         (traffic_df['driver_gender'] == gender_short) &
         (traffic_df['violation_raw'].str.lower() == violation.lower()) &
-        (traffic_df['stop_time'].str.startswith(stop_time_str)) &
+        (traffic_df['stop_time_12hr'].str.lower() == stop_time.lower()) &
         (traffic_df['search_conducted'] == search_flag) &
         (traffic_df['stop_outcome'].str.lower() == stop_outcome.lower()) &
         (traffic_df['stop_duration'] == stop_duration) &
@@ -328,21 +315,18 @@ if st.button("Generate Summary"):
         row = filtered_df.iloc[0]
         summary = (
             f"A {row['driver_age_raw']}-year-old {'male' if row['driver_gender'] == 'M' else 'female'} driver was stopped for "
-            f"{row['violation_raw']} at {row['stop_time']}. "
-            f"{'A search was conducted' if row['search_conducted'] == 'TRUE' else 'No search was conducted'}, "
+            f"{row['violation_raw']} at {row['stop_time_12hr']}. "
+            f"{'A search was conducted' if row['search_conducted'] else 'No search was conducted'}, "
             f"and the driver received a {row['stop_outcome'].lower()}. "
             f"The stop lasted {row['stop_duration']} minutes and was "
-            f"{'drug-related' if row['drugs_related_stop'] == 'TRUE' else 'not drug-related'}."
+            f"{'drug-related' if row['drugs_related_stop'] else 'not drug-related'}."
         )
+        st.info(summary)
+        st.dataframe(filtered_df)
+        st.badge("📂 Here is your matching results!", icon=":material/check:", color="green")
     else:
-        if filtered_df.empty:
-            #summary = "" 
-            st.markdown(
-                ":orange-badge[🗃️ No entries match your filters..]"
-)
-        else:
-            st.badge("📂 Here are your matching results!", icon=":material/check:", color="green")
-
+        st.markdown(":orange-badge[🗃️ No entries match your filters..]")
+ 
     # Display the result
     #st.success(summary)
 
