@@ -69,14 +69,14 @@ queries = {
     # 8.What is the average stop duration for different violations?
     "Average Stop Duration by Violation Type":
         """
-        SELECT violation,
+        SELECT violation_raw,
         ROUND(AVG(CASE stop_duration
                WHEN '0-15' THEN 7.5
                WHEN '16-30' THEN 23
                WHEN '30+' THEN 35
                END),2) AS avg_stop_duration
         FROM traffic_stop
-        GROUP BY violation
+        GROUP BY violation_raw
         ORDER BY avg_stop_duration DESC;
         """,
     # 9.Are stops during the night more likely to lead to arrests?
@@ -93,30 +93,30 @@ queries = {
     "Violations Most Commonly Associated with Searches or Arrests":
         """
         SELECT
-        violation,
+        violation_raw,
         COUNT(*) AS total_stops_with_search_and_arrest
         FROM traffic_stop
         WHERE search_conducted = TRUE AND is_arrested = TRUE
-        GROUP BY violation
+        GROUP BY violation_raw
         ORDER BY total_stops_with_search_and_arrest DESC;
         """,
     # 11.Which violations are most common among younger drivers (<25)?
     "Most Common Violations Among Drivers Under 25":
         """
-        SELECT violation,
-        COUNT(violation) AS violation_count
+        SELECT violation_raw,
+        COUNT(violation_raw) AS violation_count
         FROM traffic_stop
         WHERE driver_age_raw<25
-        GROUP BY violation
+        GROUP BY violation_raw
         ORDER BY violation_count DESC;
         """,
     # 12.Is there a violation that rarely results in search or arrest?
     "Violations That Rarely Lead to Searches or Arrests":
         """
-        SELECT violation,COUNT(*) AS total_stops_without_search_or_arrest
+        SELECT violation_raw,COUNT(*) AS total_stops_without_search_or_arrest
         FROM traffic_stop
         WHERE search_conducted = FALSE AND is_arrested = FALSE
-        GROUP BY violation
+        GROUP BY violation_raw
         ORDER BY total_stops_without_search_or_arrest ASC;
         """,
     # 13.Which countries report the highest rate of drug-related stops?
@@ -131,9 +131,9 @@ queries = {
     # 14.What is the arrest rate by country and violation?
     "Arrest Rate by Country and Type of Violation":
         """
-        SELECT country_name, violation, ROUND(AVG(CASE WHEN is_arrested = TRUE THEN 1.0 ELSE 0 END) * 100, 2)AS arrest_rate
+        SELECT country_name, violation_raw, ROUND(AVG(CASE WHEN is_arrested = TRUE THEN 1.0 ELSE 0 END) * 100, 2)AS arrest_rate
         FROM traffic_stop
-        GROUP BY country_name, violation
+        GROUP BY country_name, violation_raw
         ORDER BY arrest_rate DESC;
         """,
     # 15.Which country has the most stops with search conducted?
