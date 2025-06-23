@@ -163,12 +163,8 @@ queries = {
     #2.Driver Violation Trends Based on Age and Race (Join with Subquery)
     "Driver Violation Trends by Age and Race":
         """
-        WITH top_races AS (SELECT driver_race, COUNT(*) AS race_count
-        FROM traffic_stop
-        GROUP BY driver_race)
-        SELECT ts.driver_age_raw, ts.driver_race, COUNT(*) AS count_race
-        FROM traffic_stop ts
-        JOIN top_races tr ON ts.driver_race = tr.driver_race
+        SELECT ts.driver_age_raw, ts.driver_race, COUNT(*) AS count_race 
+        FROM (SELECT driver_age_raw, driver_race FROM traffic_stop WHERE driver_age_raw IS NOT NULL AND driver_race IS NOT NULL) AS ts 
         GROUP BY ts.driver_age_raw, ts.driver_race
         ORDER BY ts.driver_age_raw, count_race;
         """,
@@ -294,7 +290,6 @@ if st.button("Generate Summary"):
 
     # Convert inputs to match dataset format
     gender_short = 'M' if gender == 'Male' else 'F'
-    #stop_time_str = stop_time.strftime('%H:%M')  # To match with stop_time in dataset
     search_flag = True if search_conducted == 'Yes' else False
     drug_flag = True if drug_related == 'Yes' else False
 
@@ -328,7 +323,6 @@ if st.button("Generate Summary"):
         st.markdown(":orange-badge[🗃️ No entries match your filters..]")
  
     # Display the result
-    #st.success(summary)
 
     # Footer
 st.markdown("""
