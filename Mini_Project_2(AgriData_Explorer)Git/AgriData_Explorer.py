@@ -3,16 +3,24 @@ import pandas as pd
 import plotly.express as px
 
 # --- Page Config ---
-st.set_page_config(page_title="Agri Data Explorer", layout="wide")
-st.markdown(
-    "<h1 style='text-align: center; color: #00B4D8;'>Agri Data Explorer 🌾</h1>",
-    unsafe_allow_html=True
-)
+st.set_page_config(page_title="Agri Data Explorer",page_icon=":seedling:", layout="wide")
+
+st.markdown("<h1 style='color:#00B4D8;'>🌾 Agri Data Explorer</h1>", unsafe_allow_html=True)
+st.markdown("Analyze key crop production trends across Indian states and years.")
+
+st.markdown("---")
+
+# Example metrics
+#col1, col2, col3 = st.columns(3)
+#col1.metric("🌾 Top Rice State", "West Bengal", "↑ 4.2%")
+#col2.metric("🌽 Top Wheat State", "Uttar Pradesh", "↓ 1.5%")
+#col3.metric("🥜 Oilseed Yield (Best)", "Madhya Pradesh", "↑ 6.1%")
+
 
 # --- Load Data ---
 @st.cache_data
 def load_data():
-    return pd.read_csv("Data-Science-learning-path\Mini_Project_2(AgriData_Explorer)Git\\agri_data.csv")  # 🔁 Replace with your actual file name
+    return pd.read_csv("Data-Science-learning-path\Mini_Project_2(AgriData_Explorer)Git\\agri_data.csv")  
 
 agri_df = load_data()
 # ---Dropdown Options ---
@@ -34,8 +42,14 @@ chart_options = {
     "Rice vs. Wheat Yield Across States": "chart15"
 }
 
-# Dropdown for selecting the chart
-selected_chart = st.selectbox("📊 Select the Chart to Display", list(chart_options.keys()))
+# Slightly wider dropdown without using columns
+st.markdown("### 📊 Select the Chart to Display")
+selected_chart = st.selectbox(
+    "",
+    list(chart_options.keys()),
+    key="chart_selector"
+)
+
 
 
 # --- Chart 1 Function ---
@@ -69,12 +83,19 @@ def chart_1():
     fig1.update_layout(height=500)  # control height
 
     st.plotly_chart(fig1, use_container_width=True)
-        # Download button
+
+    # Optional: Show data table
+    with st.expander("📄 View Raw Data"):
+        st.dataframe(q1_df)
+        
+    # Download button for this chart's data 
+    csv_data = q1_df.to_csv(index=False).encode('utf-8')
     st.download_button(
-    label="📥 Download this data as CSV",
-    data=q1_df.to_csv(index=False),
-    file_name="sugarcane_production_last_50_years.csv",
-    mime="text/csv")
+    label="⬇️ Download CSV",
+    data=csv_data,
+    file_name='Top 7 Rice Producing States data.csv',
+    mime='text/csv'
+)
 
 
 # --- Chart 2 Function ---
@@ -757,7 +778,23 @@ def chart_15():
 
 # --- Chart Dispatcher ---
 if chart_options[selected_chart] == "chart1":
+        # 💎 Rice Metrics Section
+    st.markdown("### 📊 Key Metrics – Rice Production")
+    st.markdown("##### Last Reported Rice Production by Top 7 States")
+
+# Calculate differences
+    top_values = [544232.26, 445597.62, 335040.10, 315185.40, 291201.51, 282532.93, 231759]
+    diffs = [round(top_values[0] - v, 2) for v in top_values[1:]]
+
+# Show metrics with changes
+    col1, col2, col3 = st.columns(3)
+    col1.metric("🥇 West Bengal", "544.2K Tons", "—")
+    col2.metric("🥈 Uttar Pradesh", "445.6K Tons", f"↓ {diffs[0]/1000:.1f}K Tons")
+    col3.metric("🥉 Punjab", "335.0K Tons", f"↓ {diffs[1]/1000:.1f}K Tons")
+
     chart_1()
+
+
 elif chart_options[selected_chart] == "chart2":
     chart_2()
 elif chart_options[selected_chart] == "chart3":
