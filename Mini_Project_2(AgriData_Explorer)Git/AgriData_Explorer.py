@@ -23,7 +23,7 @@ def load_data():
     return pd.read_csv("Data-Science-learning-path\Mini_Project_2(AgriData_Explorer)Git\\agri_data.csv")  
 
 agri_df = load_data()
-# ---Dropdown Options ---
+# Dropdown Options
 chart_options = {
     "Top 7 Rice Producing States": "chart1",
     "Top 5 Wheat Producing States and Their Production Percentages (Bar Chart)": "chart2",
@@ -42,12 +42,11 @@ chart_options = {
     "Rice vs. Wheat Yield Across States": "chart15"
 }
 
-# Slightly wider dropdown without using columns
+#Dropdown 
 st.markdown("### 📊 Select the Chart to Display")
 selected_chart = st.selectbox(
     "",
-    list(chart_options.keys()),
-    key="chart_selector"
+    list(chart_options.keys())
 )
 
 
@@ -84,7 +83,7 @@ def chart_1():
 
     st.plotly_chart(fig1, use_container_width=True)
 
-    # Optional: Show data table
+    # Show data table
     with st.expander("📄 View Raw Data"):
         st.dataframe(q1_df)
         
@@ -166,11 +165,16 @@ def chart_2():
     )
 
     st.plotly_chart(fig2_1, use_container_width=True)
+
+    # Show data table
+    with st.expander("📄 View Raw Data"):
+        st.dataframe(q2_df)
+
         # Download button
     st.download_button(
     label="📥 Download this data as CSV",
     data=q2_df.to_csv(index=False),
-    file_name="sugarcane_production_last_50_years.csv",
+    file_name="Top 5 Wheat Producing States with Bar and Pie Chart.csv",
     mime="text/csv")
 
 
@@ -205,12 +209,18 @@ def chart_3():
     )
     fig3.update_layout(height=500)  # control height
 
+
     st.plotly_chart(fig3, use_container_width=True)
+
+    # Show data table
+    with st.expander("📄 View Raw Data"):
+        st.dataframe(q3_df)
+
         # Download button
     st.download_button(
     label="📥 Download this data as CSV",
     data=q3_df.to_csv(index=False),
-    file_name="sugarcane_production_last_50_years.csv",
+    file_name="Oilseed Production by Top 5 States.csv",
     mime="text/csv")
 
 
@@ -244,12 +254,19 @@ def chart_4():
     )
     fig4.update_layout(height=500)  # control height
 
+
     st.plotly_chart(fig4, use_container_width=True)
+
+    # Show data table
+    with st.expander("📄 View Raw Data"):
+        st.dataframe(q4_df)
+
+
         # Download button
     st.download_button(
     label="📥 Download this data as CSV",
     data=q4_df.to_csv(index=False),
-    file_name="sugarcane_production_last_50_years.csv",
+    file_name="Top 7 Sunflower Producing States.csv",
     mime="text/csv")
 
 
@@ -304,6 +321,12 @@ def chart_5():
     fig5.update_layout(height=550)  # control height
 
     st.plotly_chart(fig5, use_container_width=True)
+
+    # Show data table
+    with st.expander("📄 View Raw Data"):
+        st.dataframe(q5_df)
+
+
         # Download button
     st.download_button(
     label="📥 Download this data as CSV",
@@ -378,11 +401,16 @@ def chart_6():
     fig6.update_layout(height=550)  # control height
 
     st.plotly_chart(fig6, use_container_width=True)
+
+    # Show data table
+    with st.expander("📄 View Raw Data"):
+        st.dataframe(q6_df)
+
         # Download button
     st.download_button(
     label="📥 Download this data as CSV",
     data=q6_df.to_csv(index=False),
-    file_name="sugarcane_production_last_50_years.csv",
+    file_name="Rice Production Vs Wheat Production (Last 50 Years).csv",
     mime="text/csv")
 
 
@@ -416,12 +444,19 @@ def chart_7():
     )
     fig7.update_layout(height=500)  # control height
 
+
     st.plotly_chart(fig7, use_container_width=True)
+
+    # Show data table
+    with st.expander("📄 View Raw Data"):
+        st.dataframe(q7_df)
+
+
         # Download button
     st.download_button(
     label="📥 Download this data as CSV",
     data=q7_df.to_csv(index=False),
-    file_name="sugarcane_production_last_50_years.csv",
+    file_name="Rice Production by West Bengal Districts.csv",
     mime="text/csv")
 
 
@@ -455,12 +490,19 @@ def chart_8():
     )
     fig8.update_layout(height=500)  # control height
 
+
     st.plotly_chart(fig8, use_container_width=True)
+
+    # Show data table
+    with st.expander("📄 View Raw Data"):
+        st.dataframe(q8_df)
+
+
         # Download button
     st.download_button(
     label="📥 Download this data as CSV",
     data=q8_df.to_csv(index=False),
-    file_name="sugarcane_production_last_50_years.csv",
+    file_name="Top 10 Wheat Production Years from Uttar Pradesh.csv",
     mime="text/csv")
 
 
@@ -516,26 +558,71 @@ def chart_9():
     fig9.update_layout(height=550)  # control height
 
     st.plotly_chart(fig9, use_container_width=True)
+
+    # Show data table
+    with st.expander("📄 View Raw Data"):
+        st.dataframe(q9_df)
+
+
         # Download button
     st.download_button(
     label="📥 Download this data as CSV",
     data=q9_df.to_csv(index=False),
-    file_name="sugarcane_production_last_50_years.csv",
+    file_name="Millet Production (Last 50 Years).csv",
     mime="text/csv")
 
 
 def chart_10():
 
-    #Have a doubt
+    # 10.Sorghum Production (Kharif and Rabi) by Region
 
-    #fig10.update_layout(height=500)  # control height
+    q10_df = agri_df.groupby(['State Name'])[['KHARIF SORGHUM PRODUCTION (1000 tons)','RABI SORGHUM PRODUCTION (1000 tons)']].sum()
+
+    # Add TOTAL_SORGHUM PRODUCTION (1000 tons)
+    q10_df["TOTAL_SORGHUM PRODUCTION (1000 tons)"] = (
+    q10_df["KHARIF SORGHUM PRODUCTION (1000 tons)"] + q10_df["RABI SORGHUM PRODUCTION (1000 tons)"] )
+    #Sorting TOTAL_SORGHUM PRODUCTION (1000 tons)
+    q10_df = q10_df.sort_values(by="TOTAL_SORGHUM PRODUCTION (1000 tons)", ascending=False)
+
+
+    fig10 = px.bar(q10_df,
+             x=q10_df.index,
+             y='TOTAL_SORGHUM PRODUCTION (1000 tons)',
+             title='Sorghum Production (1000 tons) by State',
+             color=q10_df.index)
+    fig10.update_layout(
+    title_font=dict(color='#FF6F61', size=22),  # Title
+    xaxis_title=dict(text='State Name', font=dict(color='#999999',size=17)),
+    yaxis_title=dict(text='TOTAL_SORGHUM PRODUCTION (1000 tons)', font=dict(color='#999999',size=17)),
+    template="plotly_dark",
+        # Add outer paper background color
+    paper_bgcolor="black",
+    plot_bgcolor="black",
+
+    # Add chart border using shapes
+    shapes=[dict(
+        type="rect",
+        xref="paper", yref="paper",
+        x0=0, y0=0, x1=1, y1=1,
+        line=dict(color="#4d4d4d", width=1),
+        layer="below"
+    )],
+
+    margin=dict(l=50, r=50, t=80, b=50)
+    )
 
     st.plotly_chart(fig10, use_container_width=True)
+
+    # Show data table
+    with st.expander("📄 View Raw Data"):
+        st.dataframe(q10_df)
+
+
         # Download button
     st.download_button(
     label="📥 Download this data as CSV",
     data=q10_df.to_csv(index=False),
-    file_name="sugarcane_production_last_50_years.csv",
+    file_name="Sorghum Production (Kharif and Rabi) by Region.csv",
     mime="text/csv")
 
 
@@ -569,11 +656,17 @@ def chart_11():
     fig11.update_layout(height=550)  # control height
 
     st.plotly_chart(fig11, use_container_width=True)
+
+    # Show data table
+    with st.expander("📄 View Raw Data"):
+        st.dataframe(q11_df)
+
+
         # Download button
     st.download_button(
     label="📥 Download this data as CSV",
     data=q11_df.to_csv(index=False),
-    file_name="sugarcane_production_last_50_years.csv",
+    file_name="Top 7 States for Groundnut Production.csv",
     mime="text/csv")
 
 
@@ -612,11 +705,16 @@ def chart_12():
     )
 
     st.plotly_chart(fig12, use_container_width=True)
+
+    # Show data table
+    with st.expander("📄 View Raw Data"):
+        st.dataframe(q12_df)
+
         # Download button
     st.download_button(
     label="📥 Download this data as CSV",
     data=q12_df.to_csv(index=False),
-    file_name="sugarcane_production_last_50_years.csv",
+    file_name="Soybean Production by Top 5 States and Yield Efficiency.csv",
     mime="text/csv")
 
 
@@ -654,71 +752,88 @@ def chart_13():
     fig13.update_layout(height=550)  # control height
 
     st.plotly_chart(fig13, use_container_width=True)
+
+    # Show data table
+    with st.expander("📄 View Raw Data"):
+        st.dataframe(q13_df)
+
+        
         # Download button
     st.download_button(
     label="📥 Download this data as CSV",
     data=q13_df.to_csv(index=False),
-    file_name="sugarcane_production_last_50_years.csv",
+    file_name="Oilseed Production in Major States.csv",
     mime="text/csv")
+
 
 def chart_14():
     # Chart 14: Impact of Area Cultivated on Production (Rice, Wheat, Maize)
-
-    q14_df = agri_df.groupby(['Year', 'State Name'])[
-        ['RICE PRODUCTION (1000 tons)', 'RICE YIELD (Kg per ha)',
-         'WHEAT PRODUCTION (1000 tons)', 'WHEAT YIELD (Kg per ha)',
-         'MAIZE PRODUCTION (1000 tons)', 'MAIZE YIELD (Kg per ha)']
-    ].mean().reset_index()
-
-    yearly_df = q14_df.groupby('Year')[
-        ['RICE PRODUCTION (1000 tons)', 'WHEAT PRODUCTION (1000 tons)', 'MAIZE PRODUCTION (1000 tons)']
-    ].sum().reset_index()
-
-    fig14 = px.line(
-        yearly_df,
-        x='Year',
-        y=['RICE PRODUCTION (1000 tons)', 'WHEAT PRODUCTION (1000 tons)', 'MAIZE PRODUCTION (1000 tons)'],
-        title='Impact of Area Cultivated on Production (Rice, Wheat, Maize)',
-        labels={'value': 'Production (1000 tons)', 'variable': 'Crop'},
-        markers=True
-    )
-
+    # #Create individual dataframes with a "Crop" column
+    rice_df = agri_df[['RICE AREA (1000 ha)', 'RICE YIELD (Kg per ha)']].copy()
+    rice_df.columns = ['Area', 'Yield']
+    rice_df['Crop'] = 'Rice'
+    
+    wheat_df = agri_df[['WHEAT AREA (1000 ha)', 'WHEAT YIELD (Kg per ha)']].copy()
+    wheat_df.columns = ['Area', 'Yield']
+    wheat_df['Crop'] = 'Wheat'
+    
+    maize_df = agri_df[['MAIZE AREA (1000 ha)', 'MAIZE YIELD (Kg per ha)']].copy()
+    maize_df.columns = ['Area', 'Yield']
+    maize_df['Crop'] = 'Maize'
+    
+    #Combine them
+    
+    combined_df = pd.concat([rice_df, wheat_df, maize_df], ignore_index=True)
+    
+    #Create scatter plot
+     
+    fig14 = px.scatter(combined_df,
+                 x='Area',
+                 y='Yield',
+                 color='Crop',
+                 title='Impact of Area Cultivated on Yield for Major Crops',
+                 labels={'Area': 'Area Cultivated (1000 ha)',
+                         'Yield': 'Yield (Kg per ha)'},
+                 color_discrete_map={
+                     'Rice': '#00B4D8',
+                     'Wheat': '#FFB703',
+                     'Maize': '#90E0EF'
+                 })
+    
+    #Styling
+    
+    
     fig14.update_layout(
-        title_font=dict(color='#FF6F61', size=22),
-        xaxis_title=dict(text='Year', font=dict(color='#999999', size=17)),
-        yaxis_title=dict(text='Production (1000 tons)', font=dict(color='#999999', size=17)),
-        template="plotly_dark",
-        hovermode="x unified",
-        legend_title_text='Crop',
-        paper_bgcolor="black",
-        plot_bgcolor="black",
-        shapes=[dict(
-            type="rect", xref="paper", yref="paper",
-            x0=0, y0=0, x1=1, y1=1,
-            line=dict(color="#4d4d4d", width=1),
-            layer="below"
-        )],
-        margin=dict(l=50, r=50, t=80, b=50)
-    )
-
-    for crop in ['RICE PRODUCTION (1000 tons)', 'WHEAT PRODUCTION (1000 tons)', 'MAIZE PRODUCTION (1000 tons)']:
-        max_year = yearly_df.loc[yearly_df[crop].idxmax(), 'Year']
-        max_val = yearly_df[crop].max()
-        fig14.add_annotation(
-            x=max_year, y=max_val,
-            text=f"Peak {crop.split()[0]}",
-            showarrow=True, arrowhead=2,
-            font=dict(color='white'),
-            bgcolor="#333", bordercolor="#666", borderwidth=1
-        )
-        fig14.update_layout(height=550)  # control height
-
+    title_font=dict(color='#FF6F61', size=22),
+    xaxis_title=dict(text='Area Cultivated (1000 ha)', font=dict(color='#999999', size=17)),
+    yaxis_title=dict(text='Yield (Kg per ha)', font=dict(color='#999999', size=17)),
+    template="plotly_dark",
+    legend_title_text='Crop',
+    paper_bgcolor="black",
+    plot_bgcolor="black",
+    shapes=[dict(
+        type="rect", xref="paper", yref="paper",
+        x0=0, y0=0, x1=1, y1=1,
+        line=dict(color="#4d4d4d", width=1), layer="below"
+    )],
+    margin=dict(l=50, r=50, t=80, b=50)
+)
+    
+    fig14.show()
+    
+    fig14.update_layout(height=550)  # control height
+    
     st.plotly_chart(fig14, use_container_width=True)
+
+    # Show data table
+    with st.expander("📄 View Raw Data"):
+        st.dataframe(combined_df)
+
         # Download button
     st.download_button(
     label="📥 Download this data as CSV",
-    data=q14_df.to_csv(index=False),
-    file_name="sugarcane_production_last_50_years.csv",
+    data=combined_df.to_csv(index=False),
+    file_name="Area vs Production (Rice, Wheat, Maize).csv",
     mime="text/csv")
 
 
@@ -768,12 +883,19 @@ def chart_15():
     fig15.update_layout(height=500)  # control height
 
     st.plotly_chart(fig15, use_container_width=True)
+
+    # Show data table
+    with st.expander("📄 View Raw Data"):
+        st.dataframe(q15_df)
+
         # Download button
     st.download_button(
     label="📥 Download this data as CSV",
     data=q15_df.to_csv(index=False),
-    file_name="sugarcane_production_last_50_years.csv",
+    file_name="Rice vs. Wheat Yield Across States.csv",
     mime="text/csv")
+
+
 
 
 # --- Chart Dispatcher ---
@@ -796,8 +918,37 @@ if chart_options[selected_chart] == "chart1":
 
 
 elif chart_options[selected_chart] == "chart2":
+
+    # --- Wheat Metrics ---
+    st.markdown("### 🌾 Key Metrics – Wheat Production")
+    st.markdown("##### Last Reported Wheat Production by Top 5 States")
+
+    top_values = [970210.07, 593848.9, 348429.6, 338644.25, 265994.99]
+    diffs = [round(top_values[0] - v, 2) for v in top_values[1:]]
+
+    col1, col2, col3 = st.columns(3)
+    col1.metric("🥇 Uttar Pradesh", "970.2K Tons", "—")
+    col2.metric("🥈 Punjab", "593.8K Tons", f"↓ {diffs[0]/1000:.1f}K Tons")
+    col3.metric("🥉 Haryana", "348.4K Tons", f"↓ {diffs[1]/1000:.1f}K Tons")
+
+
     chart_2()
 elif chart_options[selected_chart] == "chart3":
+
+    # --- Oilseeds Metrics ---
+    st.markdown("### 🌻 Key Metrics – Oilseeds Production")
+    st.markdown("##### Last Reported Oilseeds Production by Top 5 States")
+
+    top_values = [153594.79, 126224.01, 122726.86, 95567.91, 76888.09]
+    diffs = [round(top_values[0] - v, 2) for v in top_values[1:]]
+
+    col1, col2, col3 = st.columns(3)
+    col1.metric("🥇 State 1", "153.6K Tons", "—")
+    col2.metric("🥈 State 2", "126.2K Tons", f"↓ {diffs[0]/1000:.1f}K Tons")
+    col3.metric("🥉 State 3", "122.7K Tons", f"↓ {diffs[1]/1000:.1f}K Tons")
+
+
+
     chart_3()
 elif chart_options[selected_chart] == "chart4":
     chart_4()
