@@ -943,20 +943,102 @@ elif chart_options[selected_chart] == "chart3":
     diffs = [round(top_values[0] - v, 2) for v in top_values[1:]]
 
     col1, col2, col3 = st.columns(3)
-    col1.metric("🥇 State 1", "153.6K Tons", "—")
-    col2.metric("🥈 State 2", "126.2K Tons", f"↓ {diffs[0]/1000:.1f}K Tons")
-    col3.metric("🥉 State 3", "122.7K Tons", f"↓ {diffs[1]/1000:.1f}K Tons")
+    col1.metric("🥇 Madhya Pradesh", "153.6K Tons", "—")
+    col2.metric("🥈 Gujarat", "126.2K Tons", f"↓ {diffs[0]/1000:.1f}K Tons")
+    col3.metric("🥉 Rajasthan", "122.7K Tons", f"↓ {diffs[1]/1000:.1f}K Tons")
 
 
 
     chart_3()
 elif chart_options[selected_chart] == "chart4":
+
+    # 🌻 Sunflower Metrics Section
+    st.markdown("### 📊 Key Metrics – Sunflower Production")
+    st.markdown("##### Last Reported Sunflower Production by Top 7 States")
+
+    # Values (in 1000 tons)
+    sunflower_values = [10785.87, 5599.46, 4447.78, 1401.06, 1081.86, 762.38, 552.66]
+    sunflower_diffs = [round(sunflower_values[0] - v, 2) for v in sunflower_values[1:]]
+
+    col1, col2, col3 = st.columns(3)
+    col1.metric("🥇 Karnataka", "10.8K Tons", "—")
+    col2.metric("🥈 Maharashtra", "5.6K Tons", f"↓ {sunflower_diffs[0]:.1f}K Tons")
+    col3.metric("🥉 Andhra Pradesh", "4.4K Tons", f"↓ {sunflower_diffs[1]:.1f}K Tons")
+
     chart_4()
 elif chart_options[selected_chart] == "chart5":
+
+    # 📈 Sugarcane Production – Peak Year Highlight
+    st.markdown("### 📊 Key Metrics – Sugarcane Production")
+    st.markdown("##### Highest Sugarcane Production Year (1968–2017)")
+
+    peak_year = 2011
+    peak_value = 38988.84
+    prev_value = 35213.44  # 2012 value (next year drop)
+
+    diff = round(prev_value - peak_value, 2)  # drop after peak
+    status = "↓"
+
+    # Metric Display
+    st.metric(f"📅 {peak_year}", f"{peak_value:,.2f} Tons", f"{status} {abs(diff):,.2f} Tons in 2012")
+
     chart_5()
 elif chart_options[selected_chart] == "chart6":
+
+    # 📊 Key Metrics – Rice & Wheat Production
+    st.markdown("### 🌾 Key Metrics – Rice & Wheat Production (1968–2017)")
+
+    # Latest and Peak values
+    rice_peak_year = 2016
+    rice_peak_value = 117614.1
+    rice_2017_value = 114319.61
+
+    wheat_peak_year = 2016
+    wheat_peak_value = 112962.82
+    wheat_2017_value = 110418.21
+
+    # Differences from 2016 to 2017
+    rice_diff = round(rice_2017_value - rice_peak_value, 2)
+    wheat_diff = round(wheat_2017_value - wheat_peak_value, 2)
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.metric(
+        label=f"🍚 Rice Peak Year - {rice_peak_year}",
+        value=f"{rice_peak_value:,.2f} Tons",
+        delta=f"{'↓' if rice_diff < 0 else '↑'} {abs(rice_diff):,.2f} Tons in 2017"
+    )
+
+    with col2:
+        st.metric(
+        label=f"🌾 Wheat Peak Year - {wheat_peak_year}",
+        value=f"{wheat_peak_value:,.2f} Tons",
+        delta=f"{'↓' if wheat_diff < 0 else '↑'} {abs(wheat_diff):,.2f} Tons in 2017"
+    )
+
+
     chart_6()
+    
 elif chart_options[selected_chart] == "chart7":
+
+    # West Bengal – Rice Production by District (Top 5)
+    st.markdown("### 📊 Key Metrics – West Bengal Rice Production")
+    st.markdown("##### Highest Producing Districts (in 1000 Tons)")
+
+    district_names = ["Midnapur", "Burdwan", "24 Parganas", "Birbhum", "Bankura"]
+    top_districts = [98868.28, 71422.15, 63011.99, 42213.81, 40165.20]
+    diffs = [round(top_districts[0] - val, 2) for val in top_districts[1:]]
+
+    col1, col2, col3 = st.columns(3)
+    col1.metric(f"🥇 {district_names[0]}", f"{top_districts[0]/1000:.1f}K Tons", "—")
+    col2.metric(f"🥈 {district_names[1]}", f"{top_districts[1]/1000:.1f}K Tons", f"↓ {diffs[0]/1000:.1f}K")
+    col3.metric(f"🥉 {district_names[2]}", f"{top_districts[2]/1000:.1f}K Tons", f"↓ {diffs[1]/1000:.1f}K")
+
+    col4, col5, _ = st.columns(3)
+    col4.metric(f"4️⃣ {district_names[3]}", f"{top_districts[3]/1000:.1f}K Tons", f"↓ {diffs[2]/1000:.1f}K")
+    col5.metric(f"5️⃣ {district_names[4]}", f"{top_districts[4]/1000:.1f}K Tons", f"↓ {diffs[3]/1000:.1f}K")
+
     chart_7()
 elif chart_options[selected_chart] == "chart8":
     chart_8()
