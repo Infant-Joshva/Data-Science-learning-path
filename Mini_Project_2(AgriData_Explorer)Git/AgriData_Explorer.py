@@ -598,6 +598,7 @@ def chart_10():
         # Add outer paper background color
     paper_bgcolor="black",
     plot_bgcolor="black",
+    
 
     # Add chart border using shapes
     shapes=[dict(
@@ -1041,10 +1042,80 @@ elif chart_options[selected_chart] == "chart7":
 
     chart_7()
 elif chart_options[selected_chart] == "chart8":
+
+    # Uttar Pradesh – Wheat Production Key Metrics
+    st.markdown("### 🌾 Key Metrics – Uttar Pradesh Wheat Production")
+    st.markdown("##### Highest Production Years (in 1000 Tons)")
+
+    top_wheat = [35798.6, 35120.9, 32271.69, 31611.63, 30602.91]
+    years = ["2017", "2016", "2013", "2011", "2010"]
+    diffs = [round(top_wheat[0] - val, 2) for val in top_wheat[1:]]
+
+    col1, col2, col3 = st.columns(3)
+    col1.metric(f"🥇 {years[0]}", f"{top_wheat[0]/1000:.1f}K Tons", "—")
+    col2.metric(f"🥈 {years[1]}", f"{top_wheat[1]/1000:.1f}K Tons", f"↓ {diffs[0]/1000:.1f}K")
+    col3.metric(f"🥉 {years[2]}", f"{top_wheat[2]/1000:.1f}K Tons", f"↓ {diffs[1]/1000:.1f}K")
+
     chart_8()
+
 elif chart_options[selected_chart] == "chart9":
+
+    # Millet Production – Key Metrics for Last 50 Years
+    st.markdown("### 🌾 Key Metrics – Millet Production Trends")
+    st.markdown("##### Peak Production Years (in 1000 Tons)")
+
+    # Manually entered from your values
+    pearl_millet_peak = 12413.46
+    finger_millet_peak = 3123.91
+    year_pearl_peak = "2011"
+    year_finger_peak = "1978"
+
+    # Comparing against next highest
+    pearl_millet_second = 12376.91
+    finger_millet_second = 3000.37
+
+    pearl_diff = round(pearl_millet_peak - pearl_millet_second, 2)
+    finger_diff = round(finger_millet_peak - finger_millet_second, 2)
+
+    col1, col2 = st.columns(2)
+
+    col1.metric(
+    label=f"🌟 Peak Pearl Millet – {year_pearl_peak}",
+    value=f"{pearl_millet_peak / 1000:.2f}K Tons",
+    delta=f"↑ {pearl_diff / 1000:.2f}K"
+    )
+
+    col2.metric(
+    label=f"🌟 Peak Finger Millet – {year_finger_peak}",
+    value=f"{finger_millet_peak / 1000:.2f}K Tons",
+    delta=f"↑ {finger_diff / 1000:.2f}K"
+    )
+
     chart_9()
 elif chart_options[selected_chart] == "chart10":
+
+    ## Sample data – total = Kharif + Rabi
+    data = {
+    'State': ['Maharashtra', 'Karnataka', 'Madhya Pradesh', 'Telangana', 'Tamil Nadu'],
+    'Kharif': [116655.48, 35279.76, 56642.83, 13221.64, 16020.74],
+    'Rabi': [85454.84, 42753.83, 116.69, 12564.79, 7620.00],
+    }
+
+    df = pd.DataFrame(data)
+    df['Total'] = df['Kharif'] + df['Rabi']
+    df = df.sort_values(by='Total', ascending=False).reset_index(drop=True)
+
+    # Calculate difference from top producer
+    diffs = [round(df.loc[0, 'Total'] - val, 2) for val in df['Total'][1:]]
+
+    # Show key metrics
+    st.markdown("### 🌾 Sorghum Production – Top 5 States (in 1000 Tons)")
+
+    col1, col2, col3 = st.columns(3)
+    col1.metric(f"🥇 {df.loc[0, 'State']}", f"{df.loc[0, 'Total']/1000:.2f}K Tons", "—")
+    col2.metric(f"🥈 {df.loc[1, 'State']}", f"{df.loc[1, 'Total']/1000:.2f}K", f"↓ {diffs[0]/1000:.2f}K")
+    col3.metric(f"🥉 {df.loc[2, 'State']}", f"{df.loc[2, 'Total']/1000:.2f}K", f"↓ {diffs[1]/1000:.2f}K")
+
     chart_10()
 elif chart_options[selected_chart] == "chart11":
     chart_11()
