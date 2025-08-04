@@ -1,21 +1,15 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+from io import BytesIO
 
 # --- Page Config ---
 st.set_page_config(page_title="Agri Data Explorer",page_icon=":seedling:", layout="wide")
 
-st.markdown("<h1 style='color:#00B4D8;'>🌾 Agri Data Explorer</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='color:#00B4D8;'>🚜🌾 Agri Data Explorer</h1>", unsafe_allow_html=True)
 st.markdown("Analyze key crop production trends across Indian states and years.")
 
 st.markdown("---")
-
-# Example metrics
-#col1, col2, col3 = st.columns(3)
-#col1.metric("🌾 Top Rice State", "West Bengal", "↑ 4.2%")
-#col2.metric("🌽 Top Wheat State", "Uttar Pradesh", "↓ 1.5%")
-#col3.metric("🥜 Oilseed Yield (Best)", "Madhya Pradesh", "↑ 6.1%")
-
 
 # --- Load Data ---
 @st.cache_data
@@ -86,15 +80,26 @@ def chart_1():
     # Show data table
     with st.expander("📄 View Raw Data"):
         st.dataframe(q1_df)
-        
-    # Download button for this chart's data 
-    csv_data = q1_df.to_csv(index=False).encode('utf-8')
+
+    # # Download chart as image (requires kaleido)
+    # buf = BytesIO()
+    # fig1.write_image(buf, format="png", width=900, height=600, scale=2)
+
+    # #fig1.write_image(buf, format="png")  # <-- convert Plotly to image
+
+    # st.download_button(
+    #     label="📥 Download Chart as PNG",
+    #     data=buf.getvalue(),
+    #     file_name="Top_7_Rice_Producing_States.png",
+    #     mime="image/png"
+    # )
+
+    # Download button
     st.download_button(
-    label="⬇️ Download CSV",
-    data=csv_data,
-    file_name='Top 7 Rice Producing States data.csv',
-    mime='text/csv'
-)
+    label="📥 Download this data as CSV",
+    data=q1_df.to_csv(index=False),
+    file_name="Top_7_Rice_Producing_States.csv",
+    mime="text/csv")
 
 
 # --- Chart 2 Function ---
@@ -820,8 +825,6 @@ def chart_14():
     margin=dict(l=50, r=50, t=80, b=50)
 )
     
-    fig14.show()
-    
     fig14.update_layout(height=550)  # control height
     
     st.plotly_chart(fig14, use_container_width=True)
@@ -1092,6 +1095,7 @@ elif chart_options[selected_chart] == "chart9":
     )
 
     chart_9()
+
 elif chart_options[selected_chart] == "chart10":
 
     ## Sample data – total = Kharif + Rabi
@@ -1118,14 +1122,121 @@ elif chart_options[selected_chart] == "chart10":
 
     chart_10()
 elif chart_options[selected_chart] == "chart11":
+
+    st.markdown("## 🥜 Top 3 Groundnut Producing States in India")
+
+
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+        st.metric(label="🥇 Gujarat", 
+              value="98,321 tons", 
+              delta="↑")
+
+    with col2:
+        st.metric(label="🥈 Andhra Pradesh", 
+              value="57,844 tons", 
+              delta="-424 tons")
+
+    with col3:
+        st.metric(label="🥉 Tamil Nadu", 
+              value="57,662 tons", 
+              delta="-182 tons")
+
+
     chart_11()
+
 elif chart_options[selected_chart] == "chart12":
+
+    st.subheader("📊 Top 3 States based on production volume and yield per hectare")
+    #st.caption("Top 3 States based on production volume and yield per hectare")
+
+
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+        st.metric(label="🌾 Madhya Pradesh", 
+              value="136K tons", 
+              delta="↑ 1.16M kg/ha Yield")
+
+    with col2:
+        st.metric(label="🌿 Maharashtra", 
+              value="58.6K tons", 
+              delta="↑ 770K kg/ha")
+
+    with col3:
+        st.metric(label="🌱 Rajasthan", 
+              value="21.2K tons", 
+              delta="↑ 405K kg/ha")
+
+
     chart_12()
 elif chart_options[selected_chart] == "chart13":
+
+    st.subheader("🛢️ Oilseeds Production - Top 3 Producing States")
+
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+        st.metric(label="🏆 Madhya Pradesh", 
+              value="153.6K tons", 
+              delta="↑ Highest Producer")
+
+    with col2:
+        st.metric(label="🥈 Gujarat", 
+              value="126.2K tons", 
+              delta="↓ -27.4K vs MP")
+
+    with col3:
+        st.metric(label="🥉 Rajasthan", 
+              value="122.7K tons", 
+              delta="↓ -3.5K vs Gujarat")
+
     chart_13()
 elif chart_options[selected_chart] == "chart14":
     chart_14()
 elif chart_options[selected_chart] == "chart15":
+
+    st.subheader("🍚 Top States by Rice Yield")
+
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+        st.metric(label="🥇 Uttar Pradesh", 
+              value="3.77M kg/ha", 
+              delta="↑ Highest Rice Yield")
+
+    with col2:
+        st.metric(label="🥈 Karnataka", 
+              value="2.13M kg/ha", 
+              delta="↓ -1.64M vs UP")
+
+    with col3:
+        st.metric(label="🥉 Tamil Nadu", 
+              value="1.76M kg/ha", 
+              delta="↓ -373K vs Karnataka")
+        
+    st.subheader("🌾 Top States by Wheat Yield")
+
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+        st.metric(label="🥇 Uttar Pradesh", 
+              value="5.21M kg/ha", 
+              delta="↑ Highest Wheat Yield")
+
+    with col2:
+        st.metric(label="🥈 Madhya Pradesh", 
+              value="2.93M kg/ha", 
+              delta="↓ -2.28M vs UP")
+
+    with col3:
+        st.metric(label="🥉 Rajasthan", 
+              value="2.72M kg/ha", 
+              delta="↓ -210K vs MP")
+
+
+
     chart_15()
 
 
