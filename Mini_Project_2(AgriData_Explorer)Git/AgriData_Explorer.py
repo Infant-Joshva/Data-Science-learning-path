@@ -24,7 +24,7 @@ chart_options = {
     "Top 5 States in Oilseed Production": "chart3",
     "Top 7 Sunflower Producing States": "chart4",
     "India's Sugarcane Production Over the Last 50 Years": "chart5",
-    "Rice vs. Wheat Production Over the Last 50 Years": "chart6",
+    "Rice vs Wheat Production Over the Last 50 Years": "chart6",
     "Rice Production in West Bengal by District": "chart7",
     "Top 10 Years of Wheat Production in Uttar Pradesh": "chart8",
     "Millet Production Over the Last 50 Years": "chart9",
@@ -33,7 +33,7 @@ chart_options = {
     "Soybean Production and Yield Efficiency by Top 5 States": "chart12",
     "Oilseed Production Across Major States": "chart13",
     "Impact of Area Cultivated on Rice, Wheat, and Maize Production": "chart14",
-    "Rice vs. Wheat Yield Across States": "chart15"
+    "Rice vs Wheat Yield Across States": "chart15"
 }
 
 #Dropdown 
@@ -42,7 +42,6 @@ selected_chart = st.selectbox(
     "",
     list(chart_options.keys())
 )
-
 
 
 # --- Chart 1 Function ---
@@ -80,19 +79,6 @@ def chart_1():
     # Show data table
     with st.expander("📄 View Raw Data"):
         st.dataframe(q1_df)
-
-    # # Download chart as image (requires kaleido)
-    # buf = BytesIO()
-    # fig1.write_image(buf, format="png", width=900, height=600, scale=2)
-
-    # #fig1.write_image(buf, format="png")  # <-- convert Plotly to image
-
-    # st.download_button(
-    #     label="📥 Download Chart as PNG",
-    #     data=buf.getvalue(),
-    #     file_name="Top_7_Rice_Producing_States.png",
-    #     mime="image/png"
-    # )
 
     # Download button
     st.download_button(
@@ -774,7 +760,7 @@ def chart_13():
 
 def chart_14():
     # Chart 14: Impact of Area Cultivated on Production (Rice, Wheat, Maize)
-    # #Create individual dataframes with a "Crop" column
+    # Create individual dataframes with a "Crop" column
     rice_df = agri_df[['RICE AREA (1000 ha)', 'RICE YIELD (Kg per ha)']].copy()
     rice_df.columns = ['Area', 'Yield']
     rice_df['Crop'] = 'Rice'
@@ -919,7 +905,6 @@ if chart_options[selected_chart] == "chart1":
 
     chart_1()
 
-
 elif chart_options[selected_chart] == "chart2":
 
     # --- Wheat Metrics ---
@@ -935,6 +920,7 @@ elif chart_options[selected_chart] == "chart2":
 
 
     chart_2()
+
 elif chart_options[selected_chart] == "chart3":
 
     # --- Oilseeds Metrics ---
@@ -948,9 +934,8 @@ elif chart_options[selected_chart] == "chart3":
     col2.metric("🥈 Gujarat", "126.2K Tons", f"↓ {diffs[0]/1000:.1f}K Tons")
     col3.metric("🥉 Rajasthan", "122.7K Tons", f"↓ {diffs[1]/1000:.1f}K Tons")
 
-
-
     chart_3()
+
 elif chart_options[selected_chart] == "chart4":
 
     # 🌻 Sunflower Metrics Section
@@ -966,9 +951,10 @@ elif chart_options[selected_chart] == "chart4":
     col3.metric("🥉 Andhra Pradesh", "4.4K Tons", f"↓ {sunflower_diffs[1]:.1f}K Tons")
 
     chart_4()
+
 elif chart_options[selected_chart] == "chart5":
 
-    # 📈 Sugarcane Production – Peak Year Highlight
+    # Sugarcane Production – Peak Year Highlight
     st.markdown("### 🍬 Sugarcane Production – Key Metrics")
 
     peak_year = 2011
@@ -982,9 +968,10 @@ elif chart_options[selected_chart] == "chart5":
     st.metric(f"📅 {peak_year}", f"{peak_value:,.2f} Tons", f"{status} {abs(diff):,.2f} Tons in 2012")
 
     chart_5()
+
 elif chart_options[selected_chart] == "chart6":
 
-    # 📊 Key Metrics – Rice & Wheat Production
+    # Key Metrics – Rice & Wheat Production
     st.markdown("### ⚖️ Rice vs Wheat – Production Metrics")
 
     # Latest and Peak values
@@ -1038,6 +1025,7 @@ elif chart_options[selected_chart] == "chart7":
     col5.metric(f"5️⃣ {district_names[4]}", f"{top_districts[4]/1000:.1f}K Tons", f"↓ {diffs[3]/1000:.1f}K")
 
     chart_7()
+
 elif chart_options[selected_chart] == "chart8":
 
     # Uttar Pradesh – Wheat Production Key Metrics
@@ -1113,6 +1101,7 @@ elif chart_options[selected_chart] == "chart10":
     col3.metric(f"🥉 {df.loc[2, 'State']}", f"{df.loc[2, 'Total']/1000:.2f}K", f"↓ {diffs[1]/1000:.2f}K")
 
     chart_10()
+
 elif chart_options[selected_chart] == "chart11":
 
     st.markdown("### 🥜 Groundnut Production – Key Metrics")
@@ -1162,6 +1151,7 @@ elif chart_options[selected_chart] == "chart12":
 
 
     chart_12()
+
 elif chart_options[selected_chart] == "chart13":
 
     st.markdown("### 🛢️ Oilseed Major States – Key Metrics")
@@ -1208,6 +1198,7 @@ elif chart_options[selected_chart] == "chart14":
 
 
     chart_14()
+    
 elif chart_options[selected_chart] == "chart15":
 
     st.markdown("### 🌾 Rice Yield – Top States Metrics")
