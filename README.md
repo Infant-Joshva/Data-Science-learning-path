@@ -21,4 +21,15 @@ This repository is my personal journey through Data Science. It will cover every
 - Apply concepts through mini-projects
 - Contribute to open-source DS projects
 
+---
+
+## 👤 Let's Connect
+
+📧 Email: [infantjoshva46@gmail.com](mailto:infantjoshva46@gmail.com)  
+🔗 LinkedIn: [infant-joshva](https://www.linkedin.com/in/infant-joshva)  
+🐙 GitHub: [Infant-Joshva](https://github.com/Infant-Joshva)
+
+---
+
+
 Stay tuned! 🌟
