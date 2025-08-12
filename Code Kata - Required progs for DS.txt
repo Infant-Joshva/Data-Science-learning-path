@@ -1,0 +1,13 @@
+Code kata for DS:
+
+1. input/output
+2 Absolute beginner
+2 Basics
+4 Arrays
+5 Numbers
+6 strings
+7 sorting
+8 Matrix's 
+9 Companies -> Factorial, Fibinosis- > optional try for practice 
+10 Mathematics -> math function
+
