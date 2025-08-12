@@ -14,7 +14,7 @@ st.markdown("---")
 # --- Load Data ---
 @st.cache_data
 def load_data():
-    return pd.read_csv("Data-Science-learning-path\Mini_Project_2(AgriData_Explorer)Git\\agri_data.csv")  
+    return pd.read_csv("Data-Science-learning-path/Project_2(AgriData_Explorer)Git/agri_data.csv")  
 
 agri_df = load_data()
 # Dropdown Options
