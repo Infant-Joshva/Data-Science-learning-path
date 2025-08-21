@@ -83,4 +83,8 @@ Doubt Column(Need to ask with PC):
 7. OverTime
 
 
+#### Bivarient Analysis
+
+1. (Gender vs Maritalstatus) vs Attrition
+
 
