@@ -42,25 +42,64 @@ mode_features = {
 
 # --- User Inputs (only selected subset) ---
 user_input = {
-    'Age': st.number_input("Age", 18, 60, 30),
+    'Age': st.number_input("Age",18), 
+
     'Education': st.selectbox("Education", [1,2,3,4,5]),
-    'EnvironmentSatisfaction': st.selectbox("Environment Satisfaction", [1,2,3,4]),
-    'JobLevel': st.selectbox("Job Level", [1,2,3,4,5]),
-    'JobSatisfaction': st.selectbox("Job Satisfaction", [1,2,3,4]),
+
+    'EnvironmentSatisfaction' : st.radio(
+        "Environment Satisfaction", 
+        options=[1, 2, 3, 4, 5],
+        format_func=lambda x: "⭐" * x,   # shows stars instead of numbers
+        horizontal=True),
+
+    'JobLevel': st.radio("Job Level", [1,2,3,4,5],horizontal=True,
+            captions=[
+            "Junior",
+            "Senior",
+            "Lead",
+            "Team Lead",
+            "PC"]),
+
+    'JobSatisfaction': st.radio(
+        "Job Satisfaction", 
+        options=[1, 2, 3, 4, 5],
+        format_func=lambda x: "⭐" * x,   # shows stars instead of numbers
+        horizontal=True),
+
     'MonthlyIncome': st.number_input("Monthly Income", 1000, 200000, 30000),
-    'PercentSalaryHike': st.number_input("Percent Salary Hike", 0, 50, 10),
-    'PerformanceRating': st.selectbox("Performance Rating", [1,2,3,4]),
-    'TotalWorkingYears': st.number_input("Total Working Years", 0, 40, 5),
-    'WorkLifeBalance': st.selectbox("Work Life Balance", [1,2,3,4]),
-    'YearsAtCompany': st.number_input("Years At Company", 0, 40, 5),
-    'YearsSinceLastPromotion': st.number_input("Years Since Last Promotion", 0, 20, 1),
-    'YearsWithCurrManager': st.number_input("Years With Current Manager", 0, 20, 3),
+
+    'PercentSalaryHike': st.number_input("Percent Salary Hike", 0),
+
+    'PerformanceRating': st.radio(
+        "Performance Rating", 
+        options=[1, 2, 3, 4, 5],
+        format_func=lambda x: "⭐" * x,   # shows stars instead of numbers
+        horizontal=True),
+
+    'TotalWorkingYears': st.number_input("Total Working Years", 1),
+
+    'WorkLifeBalance': st.radio(
+        "WorkLife Balance", 
+        options=[1, 2, 3, 4, 5],
+        format_func=lambda x: "⭐" * x,   # shows stars instead of numbers
+        horizontal=True),
+
+    'YearsAtCompany': st.number_input("Years At Company", 0),
+
+    'YearsSinceLastPromotion': st.number_input("Years Since Last Promotion", 1),
+
+    'YearsWithCurrManager': st.number_input("Years With Current Manager", 0),
+
     'Department': st.selectbox("Department", ['Sales', 'Research & Development', 'Human Resources']),
+
     'Gender': st.selectbox("Gender", ['Male', 'Female']),
+
     'JobRole': st.selectbox("Job Role", ['Sales Executive', 'Research Scientist', 'Laboratory Technician',
                                          'Manufacturing Director', 'Healthcare Representative',
-                                         'Manager', 'Sales Representative', 'Human Resources', 'Other']),
+                                         'Manager', 'Sales Representative', 'Human Resources']),
+
     'MaritalStatus': st.selectbox("Marital Status", ['Single', 'Married', 'Divorced']),
+
     'OverTime': st.selectbox("OverTime", ['Yes', 'No'])
 }
 
