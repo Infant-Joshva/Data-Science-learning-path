@@ -5,7 +5,20 @@ import joblib
 # Load your trained pipeline
 model = joblib.load("Data-Science-learning-path\Project_3(Employee_Attrition_ML_Model)Git\pickle_files\logreg_pipeline_smote.pkl")
 
-st.markdown("<h2 style='color: #FF5733;'>Employee Attrition Prediction</h2>", unsafe_allow_html=True)
+# --- Page Config ---
+st.set_page_config(page_title="Employee Attrition Prediction",page_icon="🧑‍💻")
+
+
+# --- Main Heading ---
+st.markdown(
+    "<h2 style='text-align: center; color: #FF5733;'>👨🏻‍💻 Employee Attrition Prediction Dashboard</h2>",
+    unsafe_allow_html=True
+)
+
+
+# --- Space before form ---
+st.markdown("<hr>", unsafe_allow_html=True)
+
 
 # --- Features groups ---
 median_features = {
@@ -41,6 +54,9 @@ mode_features = {
 }
 
 # --- User Inputs (only selected subset) ---
+
+st.subheader("📝 Enter Employee Details")
+
 user_input = {
     'Age': st.number_input("Age",18), 
 
@@ -52,13 +68,13 @@ user_input = {
         format_func=lambda x: "⭐" * x,   # shows stars instead of numbers
         horizontal=True),
 
-    'JobLevel': st.radio("Job Level", [1,2,3,4,5],horizontal=True,
-            captions=[
-            "Junior",
-            "Senior",
-            "Lead",
-            "Team Lead",
-            "PC"]),
+    'JobLevel': {
+        "Junior": 1,
+        "Senior": 2,
+        "Lead": 3,
+        "Team Lead": 4,
+        "PC": 5
+    }[st.radio("Job Level", ["Junior", "Senior", "Lead", "Team Lead", "PC"], horizontal=True)],
 
     'JobSatisfaction': st.radio(
         "Job Satisfaction", 
@@ -90,17 +106,20 @@ user_input = {
 
     'YearsWithCurrManager': st.number_input("Years With Current Manager", 0),
 
-    'Department': st.selectbox("Department", ['Sales', 'Research & Development', 'Human Resources']),
+    'Department': st.radio(
+        "Department", 
+        ['Sales', 'Research & Development', 'Human Resources'],horizontal=True,
+        ),
 
-    'Gender': st.selectbox("Gender", ['Male', 'Female']),
+    'Gender': st.radio("Gender", ['Male', 'Female'],horizontal=True),
 
     'JobRole': st.selectbox("Job Role", ['Sales Executive', 'Research Scientist', 'Laboratory Technician',
                                          'Manufacturing Director', 'Healthcare Representative',
                                          'Manager', 'Sales Representative', 'Human Resources']),
 
-    'MaritalStatus': st.selectbox("Marital Status", ['Single', 'Married', 'Divorced']),
+    'MaritalStatus': st.radio("Marital Status", ['Single', 'Married', 'Divorced'],horizontal=True),
 
-    'OverTime': st.selectbox("OverTime", ['Yes', 'No'])
+    'OverTime': st.radio("OverTime", ['Yes', 'No'],horizontal=True)
 }
 
 # --- Fill missing features with defaults ---
@@ -121,8 +140,12 @@ pred_proba = model.predict_proba(input_df)[0]
 class_labels = model.classes_
 probability_dict = {class_labels[i]: round(pred_proba[i], 3) for i in range(len(class_labels))}
 
+
+st.markdown("""---""")
+
+
 # --- Display Results ---
-st.subheader("Prediction Result")
+st.subheader("🎯Prediction Result")
 st.write(f"**Predicted Attrition:** {pred_class}")
 
 if pred_class == "Yes":
@@ -131,7 +154,7 @@ else:
     st.success("✅ Employee is likely to stay.")
 
 
-st.subheader("Prediction Probabilities")
+st.subheader("⚖️Prediction Probabilities")
 
 no_prob = pred_proba[class_labels.tolist().index("No")]
 yes_prob = pred_proba[class_labels.tolist().index("Yes")]
@@ -156,10 +179,9 @@ st.markdown(progress_html, unsafe_allow_html=True)
 
 
 
-
 # Footer
 st.markdown("""
-    <hr>
+    <hr style="border: 2px solid #555; border-radius: 5px; margin-top: 30px; margin-bottom: 20px;">
     <div style="text-align: center;">
         <p style="font-size: 18px;">👨🏻‍💻<span style="color:#FF5733;">Employee Attrition Prediction</span> | Built by <strong>Infant Joshva</strong></p>
         <a href="https://github.com/Infant-Joshva" target="_blank" style="text-decoration: none; margin: 0 10px;">🐙 GitHub</a>
