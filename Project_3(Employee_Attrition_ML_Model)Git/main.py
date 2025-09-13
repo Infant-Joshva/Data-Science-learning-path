@@ -108,7 +108,7 @@ user_input = {
 
     'YearsAtCompany': st.number_input("Years At Company", 0),
 
-    'YearsSinceLastPromotion': st.number_input("Years Since Last Promotion", 1),
+    'YearsSinceLastPromotion': st.number_input("Years Since Last Promotion", 0),
 
     'YearsWithCurrManager': st.number_input("Years With Current Manager", 0),
 
