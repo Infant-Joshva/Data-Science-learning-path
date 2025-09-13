@@ -3,7 +3,7 @@ import pandas as pd
 import joblib
 
 # Load your trained pipeline
-model = joblib.load("Data-Science-learning-path\Project_3(Employee_Attrition_ML_Model)Git\pickle_files\logreg_pipeline_smote.pkl")
+model = joblib.load("Data-Science-learning-path\Project_3(Employee_Attrition_ML_Model)Git\models\logreg_pipeline_smote.pkl")
 
 # --- Page Config ---
 st.set_page_config(page_title="Employee Attrition Prediction",page_icon="🧑‍💻")
