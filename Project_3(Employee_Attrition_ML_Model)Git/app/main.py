@@ -138,50 +138,54 @@ input_df = pd.DataFrame([full_input])
 expected_features = list(median_features.keys()) + list(mode_features.keys())
 input_df = input_df[expected_features]
 
-# Prediction
-pred_class = model.predict(input_df)[0]
-pred_proba = model.predict_proba(input_df)[0]
 
-# Map probability with labels
-class_labels = model.classes_
-probability_dict = {class_labels[i]: round(pred_proba[i], 3) for i in range(len(class_labels))}
+# --- Prediction Button ---
+if st.button("🔍 Predict"):
 
+    # Prediction
+    pred_class = model.predict(input_df)[0]
+    pred_proba = model.predict_proba(input_df)[0]
 
-st.markdown("""---""")
-
-
-# --- Display Results ---
-st.subheader("🎯Prediction Result")
-st.write(f"**Predicted Attrition:** {pred_class}")
-
-if pred_class == "Yes":
-    st.error("⚠️ Employee is likely to leave.")
-else:
-    st.success("✅ Employee is likely to stay.")
+    # Map probability with labels
+    class_labels = model.classes_
+    probability_dict = {class_labels[i]: round(pred_proba[i], 3) for i in range(len(class_labels))}
 
 
-st.subheader("⚖️Prediction Probabilities")
+    st.markdown("""---""")
 
-no_prob = pred_proba[class_labels.tolist().index("No")]
-yes_prob = pred_proba[class_labels.tolist().index("Yes")]
 
-no_prob = pred_proba[class_labels.tolist().index("No")]
-yes_prob = pred_proba[class_labels.tolist().index("Yes")]
+    # --- Display Results ---
+    st.subheader("🎯Prediction Result")
+    st.write(f"**Predicted Attrition:** {pred_class}")
 
-progress_html = f"""
-<div style="display: flex; width: 100%; height: 20px; border-radius: 10px; overflow: hidden; font-weight: bold; color: white;">
-    <!-- No Probability -->
-    <div style="width: {no_prob*100}%; background-color: #2ECC40; display: flex; align-items: center; justify-content: center; font-size: 12px;">
-        {no_prob*100:.0f}%
+    if pred_class == "Yes":
+        st.error("⚠️ Employee is likely to leave.")
+    else:
+        st.success("✅ Employee is likely to stay.")
+
+
+    st.subheader("⚖️Prediction Probabilities")
+
+    no_prob = pred_proba[class_labels.tolist().index("No")]
+    yes_prob = pred_proba[class_labels.tolist().index("Yes")]
+
+    no_prob = pred_proba[class_labels.tolist().index("No")]
+    yes_prob = pred_proba[class_labels.tolist().index("Yes")]
+
+    progress_html = f"""
+    <div style="display: flex; width: 100%; height: 20px; border-radius: 10px; overflow: hidden; font-weight: bold; color: white;">
+        <!-- No Probability -->
+        <div style="width: {no_prob*100}%; background-color: #2ECC40; display: flex; align-items: center; justify-content: center; font-size: 12px;">
+            {no_prob*100:.0f}%
+        </div>
+        <!-- Yes Probability -->
+        <div style="width: {yes_prob*100}%; background-color: #FF4136; display: flex; align-items: center; justify-content: center; font-size: 12px;">
+            {yes_prob*100:.0f}%
+        </div>
     </div>
-    <!-- Yes Probability -->
-    <div style="width: {yes_prob*100}%; background-color: #FF4136; display: flex; align-items: center; justify-content: center; font-size: 12px;">
-        {yes_prob*100:.0f}%
-    </div>
-</div>
-"""
+    """
 
-st.markdown(progress_html, unsafe_allow_html=True)
+    st.markdown(progress_html, unsafe_allow_html=True)
 
 
 
