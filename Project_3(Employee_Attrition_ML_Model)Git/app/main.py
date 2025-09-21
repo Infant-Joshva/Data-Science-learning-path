@@ -88,7 +88,7 @@ user_input = {
         format_func=lambda x: "⭐" * x,   # shows stars instead of numbers
         horizontal=True),
 
-    'MonthlyIncome': st.number_input("Monthly Income", 1000, 200000, 30000),
+    'MonthlyIncome': st.number_input("Monthly Income", 1000, 200000, 10000),
 
     'PercentSalaryHike': st.number_input("Percent Salary Hike", 0),
 
