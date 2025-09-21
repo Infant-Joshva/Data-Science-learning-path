@@ -331,6 +331,6 @@ st.markdown("""
         <p style="font-size: 13px;">🚨 SecureCheck | Built by <strong>Infant Joshva</strong></p>
         <a href="https://github.com/Infant-Joshva" target="_blank" style="text-decoration: none; margin: 0 10px;">🐙 GitHub</a>
         <a href="https://www.linkedin.com/in/infant-joshva" target="_blank" style="text-decoration: none; margin: 0 10px;">🔗 LinkedIn</a>
-        <a href="mailto:infantjoshva46@gmail.com" style="text-decoration: none; margin: 0 10px;">📩 Contact</a>
+        <a href="mailto:infantjoshva2024@gmail.com" style="text-decoration: none; margin: 0 10px;">📩 Contact</a>
     </div>
 """, unsafe_allow_html=True)
