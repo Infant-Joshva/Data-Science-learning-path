@@ -157,6 +157,7 @@ if st.button("🔍 Predict"):
     # --- Display Results ---
     st.subheader("🎯Prediction Result")
     st.write(f"**Predicted Attrition:** {pred_class}")
+    st.write("**Model Accuracy Rate** = 81%")
 
     if pred_class == "Yes":
         st.error("⚠️ Employee is likely to leave.")
@@ -165,6 +166,7 @@ if st.button("🔍 Predict"):
 
 
     st.subheader("⚖️Prediction Probabilities")
+
 
     no_prob = pred_proba[class_labels.tolist().index("No")]
     yes_prob = pred_proba[class_labels.tolist().index("Yes")]
