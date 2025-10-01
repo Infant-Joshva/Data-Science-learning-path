@@ -1,21 +1,15 @@
 import streamlit as st
 import pandas as pd
+import plotly.express as px
 import joblib
 
-# Load your 3 models
+# model loading
 model1 = joblib.load("Data-Science-learning-path\Project_4(Multiple_Disease_Prediction)\models\kidney.pkl")  
 model2 = joblib.load("Data-Science-learning-path\Project_4(Multiple_Disease_Prediction)\models\liver_model.pkl") 
 model3 = joblib.load("Data-Science-learning-path\Project_4(Multiple_Disease_Prediction)\models\parkinsons.pkl")  
 
 # --- Page Config ---
 st.set_page_config(page_title="Multiple Disease Prediction",page_icon="🏥")
-
-
-# # --- Main Heading ---
-# st.markdown(
-#     "<h2 style='text-align: center; color: #FF5733;'> Multiple Disease Prediction</h2>",
-#     unsafe_allow_html=True
-# )
 
 
 # Sidebar for navigation
@@ -25,16 +19,110 @@ choice = st.sidebar.selectbox(
 )
 
 if choice == "Overview":
-    st.title("Multiple Disease Prediction")
+    st.markdown(
+    '<h1 style="color:#1ac6ff; font-family:Arial; text-align:center;">Multiple Disease Prediction</h1>',
+    unsafe_allow_html=True
+    )
+
+    def show_overview():
+    # Title
+        st.title("Multiple Disease Prediction")
+    st.markdown("<hr>", unsafe_allow_html=True)
+
+    # Short intro
+    st.header("Overview")
+    st.write(
+        """
+        This application is designed to predict the likelihood of various diseases 
+        using Machine Learning models.  
+        It helps in **early awareness and prevention**, but it is **not a replacement for medical diagnosis**.  
+        """
+    )
+
+    # Navigation guide
+    st.subheader("🔎 How to Use")
+    st.write("""
+    - Go to **Diabetes Prediction** page to check your risk for Diabetes.  
+    - Go to **Heart Disease Prediction** page to check for Heart health.  
+    - Go to **Kidney Disease Prediction** page for Kidney-related prediction.  
+    - Go to **Parkinson’s Prediction** page for voice-based analysis.  
+    """)
+
+    # Workflow
+    st.subheader("⚙️ Workflow")
+    st.markdown(
+        """
+        1. Enter your health parameters in the form.  
+        2. The trained ML model processes your input.  
+        3. You will get a prediction result instantly.  
+        """
+    )
+
+    # Dataset and Models
+    with st.expander("📊 Dataset & Models Used"):
+        st.write("""
+        - **Datasets:** Taken from Kaggle.  
+        - **Algorithms Used:** Logistic Regression, Random Forest, SVM, etc.  
+        - Models are trained and optimized for accuracy and performance.  
+        """)
+
+    
+    # Model Performance Chart (Plotly)
+    st.subheader("📈 Model Performance (Accuracy)")
+    performance = pd.DataFrame({
+        "Model": ["Kidney (Random Forest)", "Liver (Decision Tree)", "Parkinson's (SVM)"],
+        "Accuracy": [0.99, 0.86, 0.97]   
+    })
+
+    fig = px.bar(
+        performance, 
+        x="Model", 
+        y="Accuracy", 
+        text="Accuracy",
+        color="Model",
+        color_discrete_sequence=["#1f77b4", "#ff7f0e", "#2ca02c"], 
+        title="Model Accuracy Comparison"
+    )
+    fig.update_traces(texttemplate='%{text:.0%}', textposition="inside", insidetextanchor="middle")
+    fig.update_layout(
+        xaxis=dict(showgrid=False, zeroline=False),
+        yaxis=dict(showticklabels=False,tickformat=".0%", range=[0,1],showgrid=False, zeroline=False),
+        xaxis_title="",
+        yaxis_title="",
+        plot_bgcolor="rgba(0,0,0,0)",
+        paper_bgcolor="rgba(0,0,0,0)",
+        height=450, 
+        width=900 
+    )
+    st.plotly_chart(fig, use_container_width=True)
+
+
+    # Disclaimer
+    st.warning("⚠️ Disclaimer: This app is for educational/demo purposes only, not for medical diagnosis.")
+
+    # Footer / credits
+    st.markdown("---")
+    st.markdown("""
+        <div style="text-align: center;">
+            <p style="font-size: 18px;">⚕️<span style="color:#FF5733;">Multiple Disease Prediction</span> | Built by <strong>Infant Joshva</strong></p>
+            <a href="https://github.com/Infant-Joshva" target="_blank" style="text-decoration: none; margin: 0 10px;">🐙 GitHub</a>
+            <a href="https://www.linkedin.com/in/infant-joshva" target="_blank" style="text-decoration: none; margin: 0 10px;">🔗 LinkedIn</a>
+            <a href="mailto:infantjoshva2024@gmail.com" style="text-decoration: none; margin: 0 10px;">📩 Contact</a>
+        </div>
+    """, unsafe_allow_html=True)
+
 
 
 elif choice == "Kidney Disease":
-    st.title("🩺 Kidney Disease Prediction")
+    st.markdown(
+    '<h1 style="color:#ff944d; font-family:Arial; text-align:center;">🩺 Kidney Disease Prediction</h1>',
+    unsafe_allow_html=True
+    )
     st.markdown("<hr>", unsafe_allow_html=True)
 
     # Input Form
     with st.form("kidney_form", clear_on_submit=False):
-        st.subheader("Enter Patient Kidney Health Parameters")
+        st.subheader("Enter Kidney Patient Health Parameters")
 
         col1, col2, col3 = st.columns(3)
 
@@ -111,12 +199,16 @@ elif choice == "Kidney Disease":
         st.markdown(progress_html, unsafe_allow_html=True)
 
 elif choice == "Liver Disease":
-    st.title("🧪 Liver Disease Prediction")
+    st.markdown(
+    '<h1 style="color:#ff944d; font-family:Arial; text-align:center;">🧪 Liver Disease Prediction</h1>',
+    unsafe_allow_html=True
+    )
+
     st.markdown("<hr>", unsafe_allow_html=True)
 
     # Input Form
     with st.form("liver_form", clear_on_submit=False):
-        st.subheader("Enter Patient Liver Health Parameters")
+        st.subheader("Enter Liver Patient Health Parameters")
 
         col1, col2, col3 = st.columns(3)
 
@@ -186,12 +278,16 @@ elif choice == "Liver Disease":
 
 
 elif choice == "Parkinsons Disease":
-    st.title("🧠 Parkinson's Disease Prediction")
+    st.markdown(
+    '<h1 style="color:#ff944d; font-family:Arial; text-align:center;">🧠 Parkinsons Disease Prediction</h1>',
+    unsafe_allow_html=True
+    )
+
     st.markdown("<hr>", unsafe_allow_html=True)
 
     # Input Form
     with st.form("parkinsons_form", clear_on_submit=False):
-        st.subheader("Enter Patient Voice Measurement Features")
+        st.subheader("Enter Parkinsons Patient Voice Measurements")
 
         col1, col2, col3 = st.columns(3)
 
