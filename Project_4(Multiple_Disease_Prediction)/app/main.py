@@ -33,19 +33,28 @@ if choice == "Overview":
     st.header("Overview")
     st.write(
         """
-        This application is designed to predict the likelihood of various diseases 
-        using Machine Learning models.  
-        It helps in **early awareness and prevention**, but it is **not a replacement for medical diagnosis**.  
+        This application demonstrates the use of **Machine Learning models** in the 
+        healthcare domain for predicting the likelihood of certain diseases based on 
+        patient medical reports.  
+
+        The project covers three conditions:  
+        - **Liver Disease** – prediction based on biochemical and demographic attributes.  
+        - **Kidney Disease** – prediction using clinical measurements and test results.  
+        - **Parkinson’s Disease** – prediction using voice-based biomedical features.  
+
+        The primary goal is to provide an **early indication** of whether a patient 
+        may be at risk, which can help in **awareness and timely consultation with healthcare professionals**.  
+        However, this tool is intended only for **educational and research purposes** 
+        and should not be used as a replacement for medical diagnosis.  
         """
     )
 
     # Navigation guide
     st.subheader("🔎 How to Use")
     st.write("""
-    - Go to **Diabetes Prediction** page to check your risk for Diabetes.  
-    - Go to **Heart Disease Prediction** page to check for Heart health.  
-    - Go to **Kidney Disease Prediction** page for Kidney-related prediction.  
-    - Go to **Parkinson’s Prediction** page for voice-based analysis.  
+    - Go to **Liver Disease Prediction** to analyze liver-related medical data.  
+    - Go to **Kidney Disease Prediction** to analyze kidney-related medical data.  
+    - Go to **Parkinson’s Prediction** to analyze voice-based health data.  
     """)
 
     # Workflow
@@ -62,7 +71,7 @@ if choice == "Overview":
     with st.expander("📊 Dataset & Models Used"):
         st.write("""
         - **Datasets:** Taken from Kaggle.  
-        - **Algorithms Used:** Logistic Regression, Random Forest, SVM, etc.  
+        - **Algorithms Used:** Logistic Regression, Random Forest, SVM.  
         - Models are trained and optimized for accuracy and performance.  
         """)
 
