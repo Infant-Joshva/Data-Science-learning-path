@@ -14,13 +14,13 @@ st.set_page_config(page_title="Multiple Disease Prediction",page_icon="🏥")
 
 # Sidebar for navigation
 choice = st.sidebar.selectbox(
-    "Choose Disease Prediction",
-    ["Overview","Kidney Disease", "Liver Disease", "Parkinsons Disease"]
+    "Choose Disease Prediction", 
+    ["📄 Overview", "🩸 Kidney Disease", "🧬 Liver Disease", "🧩 Parkinsons Disease"]
 )
 
-if choice == "Overview":
+if choice == "📄 Overview":
     st.markdown(
-    '<h1 style="color:#1ac6ff; font-family:Arial; text-align:center;">Multiple Disease Prediction</h1>',
+    '<h1 style="color:#1ac6ff; font-family:Arial; text-align:center;">💊 Multiple Disease Prediction</h1>',
     unsafe_allow_html=True
     )
 
@@ -122,7 +122,7 @@ if choice == "Overview":
 
 
 
-elif choice == "Kidney Disease":
+elif choice == "🩸 Kidney Disease":
     st.markdown(
     '<h1 style="color:#ff944d; font-family:Arial; text-align:center;">🩺 Kidney Disease Prediction</h1>',
     unsafe_allow_html=True
@@ -207,7 +207,7 @@ elif choice == "Kidney Disease":
         """
         st.markdown(progress_html, unsafe_allow_html=True)
 
-elif choice == "Liver Disease":
+elif choice == "🧬 Liver Disease":
     st.markdown(
     '<h1 style="color:#ff944d; font-family:Arial; text-align:center;">🧪 Liver Disease Prediction</h1>',
     unsafe_allow_html=True
@@ -286,7 +286,7 @@ elif choice == "Liver Disease":
         st.markdown(progress_html, unsafe_allow_html=True)
 
 
-elif choice == "Parkinsons Disease":
+elif choice == "🧩 Parkinsons Disease":
     st.markdown(
     '<h1 style="color:#ff944d; font-family:Arial; text-align:center;">🧠 Parkinsons Disease Prediction</h1>',
     unsafe_allow_html=True
