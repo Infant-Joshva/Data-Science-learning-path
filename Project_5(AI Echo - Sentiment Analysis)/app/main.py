@@ -23,7 +23,7 @@ model = joblib.load(
 @st.cache_data
 def load_data():
     return pd.read_csv(
-        "Data-Science-learning-path/Project_5(AI Echo - Sentiment Analysis)/dataset/cleaned_df_with_senti_map.csv"
+        "Data-Science-learning-path\Project_5(AI Echo - Sentiment Analysis)\dataset\cleaned_senti_mapped_data.csv"
     )
 
 review_df = load_data()
