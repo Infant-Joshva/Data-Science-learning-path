@@ -194,7 +194,7 @@ def chart_3_neg():
 
 if option == "📘 Project Explanation":
     st.markdown(
-        '<h1 style="color:#00c8ff; font-family:Arial; text-align:center;">💬 AI Echo: Your Smartest Conversational Partner</h1>',
+        '<h1 style="color:#9AD0EC; font-family:Arial; text-align:center;">💬 AI Echo: Your Smartest Conversational Partner</h1>',
         unsafe_allow_html=True
     )
     st.markdown("<hr>", unsafe_allow_html=True)
@@ -249,7 +249,7 @@ if option == "📘 Project Explanation":
     st.markdown("---")
     st.markdown("""
         <div style="text-align: center;">
-            <p style="font-size: 18px;">💭<span style="color:#00c8ff;">AI Echo : Your Smartest Conversational Partner</span> | Built by <strong>Infant Joshva</strong></p>
+            <p style="font-size: 18px;">💭<span style="color:#D9E2EC;">AI Echo : Your Smartest Conversational Partner</span> | Built by <strong>Infant Joshva</strong></p>
             <a href="https://github.com/Infant-Joshva" target="_blank" style="text-decoration: none; margin: 0 10px;">🐙 GitHub</a>
             <a href="https://www.linkedin.com/in/infant-joshva" target="_blank" style="text-decoration: none; margin: 0 10px;">🔗 LinkedIn</a>
             <a href="mailto:infantjoshva2024@gmail.com" style="text-decoration: none; margin: 0 10px;">📩 Contact</a>
