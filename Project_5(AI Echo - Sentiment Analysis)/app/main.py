@@ -14,7 +14,7 @@ import joblib
 # 1️⃣ MODEL LOADING
 # ======================================================
 model = joblib.load(
-    "Data-Science-learning-path/Project_5(AI Echo - Sentiment Analysis)/model/model.pkl"
+    "Data-Science-learning-path\Project_5(AI Echo - Sentiment Analysis)\model\Model_log-new_data.pkl"
 )
 
 # ======================================================
@@ -284,6 +284,8 @@ elif option == "💡 Model Prediction":
     st.markdown("Enter your review and let AI predict the sentiment!")
 
     user_input = st.text_area("✍️ Type your review below:")
+    st.caption("💡 **Note:** This model is trained with English language reviews only.")
+
 
     if st.button("🔍 Predict Sentiment"):
         if user_input.strip():
