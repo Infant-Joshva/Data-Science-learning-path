@@ -291,7 +291,7 @@ elif option == "💡 Model Prediction":
         if user_input.strip():
             pred = model.predict([user_input])[0]
             pred_proba = model.predict_proba([user_input])[0]
-            emoji_map = {"Positive": "😄", "Neutral": "😐", "Negative": "😞"}
+            emoji_map = {"Positive": "😄💚", "Neutral": "😐", "Negative": "😞"}
             st.markdown(f"### **Predicted Sentiment:** {pred} {emoji_map.get(pred, '')}")
             st.success(f"Confidence: {max(pred_proba)*100:.2f}%")
         else:
