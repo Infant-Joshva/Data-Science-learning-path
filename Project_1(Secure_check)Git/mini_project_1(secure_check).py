@@ -5,7 +5,7 @@ from sqlalchemy import create_engine, inspect
 
 
 
-traffic_df=pd.read_csv("Data-Science-learning-path\Mini_Project_1(Secure_check)Git\cleaned_traffic_stop.csv")
+traffic_df=pd.read_csv("Data-Science-learning-path\Project_1(Secure_check)Git\cleaned_traffic_stop.csv")
 
 db_url = "postgresql://postgres:Admin@localhost:5432/traffic"
 engine=create_engine(db_url)
