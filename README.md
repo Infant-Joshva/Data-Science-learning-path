@@ -1,4 +1,4 @@
-# 🚀 My Data Science Journey — Timeline
+# 🚀 My Data Science Learning Journey — Timeline
 
 A complete, step-by-step documentation of how I learned Data Science — from basics to real-world projects.  
 This timeline captures my growth, the topics I mastered, and the tools I worked with throughout the journey.
