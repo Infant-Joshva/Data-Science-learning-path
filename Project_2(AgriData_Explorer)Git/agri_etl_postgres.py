@@ -7,7 +7,7 @@ from sqlalchemy import create_engine, inspect
 agri_df = pd.read_csv("Data-Science-learning-path\Mini_Project_2(AgriData_Explorer)Git\\agri_data.csv")
 
 # Connect to PostgreSQL
-db_url = "postgresql://postgres:Admin@localhost:5432/Agri_db"
+db_url = st.secrets["db_url"]
 engine = create_engine(db_url)
 
 # Write the DataFrame to SQL (replace if exists)
